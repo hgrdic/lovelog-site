@@ -1,8 +1,8 @@
 # lovelog-site
 
-Marketing and legal site for LoveLog, plain static HTML, no build step. Deployed on GitHub Pages,
-custom domain `lovelog.back-slash.hr`, matching how `back-slash.hr` and `brojko.back-slash.hr` are
-deployed.
+Marketing and legal site for LoveLog, plain static HTML, no build step. Deployed on Vercel
+(project `lovelog-legal`, linked to `hgrdic/lovelog-site`), custom domain `lovelog.back-slash.hr`,
+matching how `nula.back-slash.hr` is deployed.
 
 ## Pages
 - `/` and `/hr/` — home (English default, Croatian toggle)
@@ -11,14 +11,21 @@ deployed.
 - `/support` and `/hr/support` — Support
 
 ## Deploy
-1. Push this repo to GitHub as `hgrdic/lovelog-site` (or similar).
-2. In the repo Settings, then Pages, set the source to the `main` branch, root folder. The `CNAME`
-   file already points at `lovelog.back-slash.hr`, so GitHub Pages picks it up automatically.
-3. In Cloudflare DNS for `back-slash.hr`, add a CNAME record: `lovelog` to `hgrdic.github.io`
-   (DNS only, not proxied, so GitHub Pages can issue its own TLS certificate for the custom
-   domain, same pattern as the `back-slash.hr` root and the `brojko` record).
-4. Once DNS resolves, GitHub issues an HTTPS certificate for the custom domain automatically
-   (can take a few minutes to a few hours).
+The Vercel project `lovelog-legal` is already created and linked to this repo, so every push to
+`main` deploys to production automatically. Framework preset is "Other" (static HTML, no build
+command). Vercel serves clean URLs, so `/privacy` resolves to `privacy/index.html`.
+
+Custom domain (one-time, done in the Vercel dashboard, not via API):
+1. Vercel, then the `lovelog-legal` project, then Settings, then Domains. Add
+   `lovelog.back-slash.hr`. If that subdomain is attached to another Vercel project, remove it
+   there first, a domain points at one project at a time.
+2. In Cloudflare DNS for `back-slash.hr`, add a CNAME record: `lovelog` to `cname.vercel-dns.com`,
+   DNS only (grey cloud, not proxied), matching the `nula` record.
+3. Vercel issues the TLS certificate automatically once DNS resolves (a few minutes, up to a few
+   hours).
+
+The `CNAME` file in the repo root is a leftover from the GitHub Pages plan and is ignored by
+Vercel. It can stay or be deleted.
 
 ## To do around submission
 - **App Store link.** The App Store Connect app ID is `6803402403`, so the store URL will be
